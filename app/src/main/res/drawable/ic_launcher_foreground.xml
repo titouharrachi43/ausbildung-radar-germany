@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Glowing Radar Beam & Target blips -->
+    <path
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="2.5"
+        android:fillColor="#00000000"
+        android:pathData="M54,20 A34,34 0 1,1 53.9,20 Z" />
+    <path
+        android:strokeColor="#60A5FA"
+        android:strokeWidth="1.8"
+        android:fillColor="#00000000"
+        android:pathData="M54,34 A20,20 0 1,1 53.9,34 Z" />
+    <!-- Radar sweep line -->
+    <path
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M54,54 L78,30" />
+    <!-- Center radar origin -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M54,50 A4,4 0 1,1 53.9,50 Z" />
+    <!-- Opportunity blips: Amber (marketing), Emerald (education), Pink -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M70,38 A3.5,3.5 0 1,1 69.9,38 Z" />
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M38,62 A3.5,3.5 0 1,1 37.9,62 Z" />
+    <path
+        android:fillColor="#EC4899"
+        android:pathData="M66,66 A3,3 0 1,1 65.9,66 Z" />
+</vector>

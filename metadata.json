@@ -1,0 +1,6 @@
+{
+  "name": "Ausbildung Radar",
+  "description": "Automated research assistant discovering German businesses, career portals and genuine Ausbildung opportunities in Marketing and Education.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
