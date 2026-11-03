@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Radar, Clock, ShieldCheck, User, LogIn, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Radar, Clock, ShieldCheck, User, LogIn, LogOut, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
 import { auth, googleProvider } from '../firebase';
 import { signInWithPopup, signOut, onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 
@@ -67,8 +67,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
   const navItems = [
     { id: 'overview', label: 'Overview' },
-    { id: 'opportunities', label: 'Opportunities' },
-    { id: 'companies', label: 'Discovered Businesses' },
+    { id: 'companies', label: 'Find Best with Gemini' },
+    { id: 'opportunities', label: 'Opportunities Pipeline' },
     { id: 'investigate', label: 'Website Crawler' },
     { id: 'gemini', label: 'AI Extractor' },
     { id: 'automation', label: 'Automation & Scheduler' },

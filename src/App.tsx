@@ -54,6 +54,13 @@ export const App: React.FC = () => {
     setActiveTab('gemini');
   };
 
+  const handleAddOpportunity = (newOpp: Opportunity) => {
+    setOpportunities((prev) => {
+      if (prev.some((o) => o.id === newOpp.id)) return prev;
+      return [newOpp, ...prev];
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0F19] text-gray-100 flex flex-col font-sans">
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -76,6 +83,7 @@ export const App: React.FC = () => {
           <CompaniesView
             companies={companies}
             onInvestigateCompany={handleInvestigateCompany}
+            onAddOpportunity={handleAddOpportunity}
           />
         )}
 
@@ -114,6 +122,8 @@ export const App: React.FC = () => {
             <span>Autonomous Vocational Research Assistant</span>
           </div>
           <div className="flex items-center space-x-4">
+            <span>Discovery: Gemini AI</span>
+            <span>•</span>
             <span>Server: Node.js 22 + React 19</span>
             <span>•</span>
             <span>Host: 0.0.0.0:3000</span>

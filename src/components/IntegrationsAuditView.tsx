@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Activity, CheckCircle2, XCircle, AlertTriangle, RefreshCw, Key, Database, Globe, Cpu, Radio, Shield } from 'lucide-react';
+import React, { useState } from 'react';
+import { Activity, CheckCircle2, AlertTriangle, RefreshCw, Database, Globe, Cpu, Radio, Shield, Sparkles } from 'lucide-react';
 import { SystemHealth } from '../types';
 
 interface IntegrationsAuditViewProps {
@@ -19,15 +19,25 @@ export const IntegrationsAuditView: React.FC<IntegrationsAuditViewProps> = ({
       status: 'CONFIGURED & HEALTHY',
       statusType: 'success',
       icon: Activity,
-      testResult: `HTTP 200 OK — Node.js v22 Express API + React 19 Frontend active.`,
-      nextSteps: 'Working as designed. Both client and server run on unified port 3000.',
+      testResult: 'HTTP 200 OK — Node.js v22 Express API + React 19 Frontend active on port 3000.',
+      nextSteps: 'Working as designed.',
+    },
+    {
+      feature: 'Gemini AI Discovery & Ranking Engine',
+      status: health?.integrations.geminiApi.configured ? 'ACTIVE & CONFIGURED' : 'NOT CONFIGURED',
+      statusType: health?.integrations.geminiApi.configured ? 'success' : 'error',
+      icon: Sparkles,
+      testResult: health?.integrations.geminiApi.configured
+        ? `API key configured (${health.integrations.geminiApi.keyMasked}). Models: ${health.integrations.geminiApi.models?.join(', ') || 'gemini-1.5-flash, gemini-2.0-flash'}. Direct discovery and quality scoring active.`
+        : 'GEMINI_API_KEY is not configured in server environment secrets.',
+      nextSteps: 'Used exclusively to discover and rank the best Ausbildung opportunities without requiring Google Maps.',
     },
     {
       feature: 'Firebase Authentication (Google Sign-In)',
       status: 'CONFIGURED',
       statusType: 'success',
       icon: Shield,
-      testResult: `Web Client initialized on project gen-lang-client-0556535763.`,
+      testResult: 'Web Client initialized on project gen-lang-client-0556535763.',
       nextSteps: 'Click "Google Sign-In" in the header to authenticate with your administrator account.',
     },
     {
@@ -35,28 +45,16 @@ export const IntegrationsAuditView: React.FC<IntegrationsAuditViewProps> = ({
       status: 'PROVISIONED & SECURED',
       statusType: 'success',
       icon: Database,
-      testResult: `Database ai-studio-android-ausbildu-d760f243-40ee-46f2-8e1d-33ea02fbf2df secured with zero-trust rules.`,
+      testResult: 'Database ai-studio-android-ausbildu-d760f243-40ee-46f2-8e1d-33ea02fbf2df secured with zero-trust rules.',
       nextSteps: 'Sign in to access and persist custom company & opportunity documents.',
     },
     {
-      feature: 'Google Places API (New)',
-      status: health?.integrations.googlePlacesApi.configured ? 'CONFIGURED' : 'NOT CONFIGURED',
-      statusType: health?.integrations.googlePlacesApi.configured ? 'success' : 'error',
+      feature: 'Google Places / Maps API',
+      status: 'NOT REQUIRED (DISABLED)',
+      statusType: 'success',
       icon: Globe,
-      testResult: health?.integrations.googlePlacesApi.configured
-        ? `API key present: ${health.integrations.googlePlacesApi.keyMasked}`
-        : 'HTTP 403 API_KEY_SERVICE_BLOCKED for places.googleapis.com on project 181037209010.',
-      nextSteps: 'Enable "Places API (New)" in Google Cloud Console and set GOOGLE_MAPS_API_KEY in Secrets.',
-    },
-    {
-      feature: 'Gemini AI Research & Verification Engine',
-      status: health?.integrations.geminiApi.configured ? 'CONFIGURED' : 'NOT CONFIGURED',
-      statusType: health?.integrations.geminiApi.configured ? 'success' : 'error',
-      icon: Cpu,
-      testResult: health?.integrations.geminiApi.configured
-        ? `API key present: ${health.integrations.geminiApi.keyMasked}`
-        : 'HTTP 403 API_KEY_SERVICE_BLOCKED for generativelanguage.googleapis.com on project 181037209010.',
-      nextSteps: 'Enable "Generative Language API" in Google Cloud Console and set GEMINI_API_KEY in Secrets.',
+      testResult: 'Google Places API removed per user specification. Gemini AI replaces all discovery functionality directly.',
+      nextSteps: 'No action needed. No Google Maps key or billing setup required.',
     },
     {
       feature: 'Company Career Page Crawler',
@@ -67,12 +65,12 @@ export const IntegrationsAuditView: React.FC<IntegrationsAuditViewProps> = ({
       nextSteps: 'Ready to use. Enter any German corporate URL in the Website Crawler tab.',
     },
     {
-      feature: '5-Hour Google Cloud Scheduler Automation',
-      status: 'NOT CONFIGURED',
-      statusType: 'error',
+      feature: '5-Hour Cloud Scheduler Automation',
+      status: 'LOCAL RUNTIME READY',
+      statusType: 'neutral',
       icon: Radio,
-      testResult: 'No external Cloud Scheduler cron job is deployed. Autonomous 5-hour triggers require Cloud Run.',
-      nextSteps: 'Deploy this container to Google Cloud Run and create a Cloud Scheduler job targeting /api/scheduler/run (cron: 0 */5 * * *).',
+      testResult: 'Local simulated trigger /api/scheduler/run available. Autonomous cloud execution requires Cloud Run.',
+      nextSteps: 'Deploy container to Google Cloud Run and create a Cloud Scheduler job targeting /api/scheduler/run (cron: 0 */5 * * *).',
     },
   ];
 
@@ -87,28 +85,28 @@ export const IntegrationsAuditView: React.FC<IntegrationsAuditViewProps> = ({
             </span>
           </h2>
           <p className="text-xs text-gray-400">
-            Real-time status of backend services, APIs, security rules, and cloud infrastructure.
+            Real-time status of backend services, Gemini AI engine, and database persistence.
           </p>
         </div>
 
         <button
           onClick={onRefreshHealth}
           disabled={refreshing}
-          className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-xs font-semibold text-gray-200 transition disabled:opacity-50"
+          className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-xs font-semibold text-gray-200 transition disabled:opacity-50 cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-cyan-400' : ''}`} />
           <span>Refresh Live Status</span>
         </button>
       </div>
 
-      {/* Raw Health JSON Toggle / Banner */}
+      {/* Raw Health Banner */}
       {health && (
         <div className="p-4 rounded-xl bg-gray-900/60 border border-gray-800 flex items-center justify-between text-xs text-gray-300">
           <div>
             <span className="text-emerald-400 font-bold">● System Active:</span> {health.service}
           </div>
           <div className="font-mono text-gray-400 text-[11px]">
-            Server Uptime: {health.uptimeSeconds}s • Timestamp: {new Date(health.timestamp).toLocaleTimeString()}
+            Discovery Engine: <span className="text-cyan-300 font-semibold">{health.discoveryEngine || 'Gemini AI'}</span> • Uptime: {health.uptimeSeconds}s
           </div>
         </div>
       )}
@@ -139,6 +137,8 @@ export const IntegrationsAuditView: React.FC<IntegrationsAuditViewProps> = ({
                         className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider ${
                           item.statusType === 'success'
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                            : item.statusType === 'neutral'
+                            ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20'
                             : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
                         }`}
                       >

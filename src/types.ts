@@ -30,6 +30,8 @@ export interface Opportunity {
   requirements: string[];
   benefits: string[];
   isDemoData: boolean;
+  stipendMonthly?: string;
+  whyRatedBest?: string;
 }
 
 export interface Company {
@@ -40,10 +42,32 @@ export interface Company {
   category: string;
   websiteUrl: string;
   careerUrl: string;
-  placeId: string;
+  placeId?: string;
   discoveredAt: string;
   verifiedOpportunitiesCount: number;
   isDemoData: boolean;
+  whyRatedBest?: string;
+  stipendMonthly?: string;
+}
+
+export interface GeminiBestOpportunity {
+  id: string;
+  companyName: string;
+  titleGerman: string;
+  category: Sector;
+  opportunityType: OpportunityType;
+  city: string;
+  bundesland: string;
+  targetYear: 2027 | 2028;
+  startDate: string;
+  stipendMonthly: string;
+  qualityScore: number;
+  whyRatedBest: string;
+  requirements: string[];
+  benefits: string[];
+  websiteUrl: string;
+  careerUrl: string;
+  cityTier: string;
 }
 
 export interface SystemHealth {
@@ -52,6 +76,7 @@ export interface SystemHealth {
   timestamp: string;
   uptimeSeconds: number;
   environment: string;
+  discoveryEngine?: string;
   integrations: {
     firebase: {
       configured: boolean;
@@ -59,15 +84,18 @@ export interface SystemHealth {
       authMethod: string;
       firestoreDatabase: string;
     };
-    googlePlacesApi: {
+    googlePlacesApi?: {
       configured: boolean;
-      keyMasked: string;
-      endpoint: string;
+      required?: boolean;
+      status?: string;
+      message?: string;
+      keyMasked?: string;
     };
     geminiApi: {
       configured: boolean;
       keyMasked: string;
       models: string[];
+      role?: string;
     };
     cloudScheduler: {
       configured: boolean;

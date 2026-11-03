@@ -201,10 +201,16 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ opportunit
                   </span>
                 </div>
 
-                {/* Description Snippet */}
+                {/* Description Snippet or Gemini Rating */}
                 <p className="text-xs text-gray-300 line-clamp-2 leading-relaxed">
-                  {opp.descriptionSnippet}
+                  {opp.whyRatedBest || opp.descriptionSnippet}
                 </p>
+
+                {opp.stipendMonthly && (
+                  <div className="text-xs text-emerald-400 font-medium">
+                    Tarifvergütung: {opp.stipendMonthly}
+                  </div>
+                )}
 
                 {/* Requirements / Tags */}
                 <div className="flex flex-wrap gap-1.5 pt-1">
@@ -225,7 +231,7 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ opportunit
               <div className="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-1.5 text-cyan-400 font-semibold">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>{(opp.confidenceScore * 100).toFixed(0)}% Confidence</span>
+                  <span>{(opp.confidenceScore * 100).toFixed(0)}% Score</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -284,6 +290,19 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ opportunit
                 <span>Ausbildungsjahr: <strong className="text-cyan-300">{selectedOpportunity.targetYear}</strong></span>
               </div>
             </div>
+
+            {selectedOpportunity.whyRatedBest && (
+              <div className="p-3.5 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-200">
+                <span className="font-bold text-cyan-300 block mb-1">Gemini AI Evaluation:</span>
+                {selectedOpportunity.whyRatedBest}
+              </div>
+            )}
+
+            {selectedOpportunity.stipendMonthly && (
+              <div className="text-xs text-emerald-400 font-semibold bg-emerald-950/30 border border-emerald-800/40 p-2.5 rounded-lg">
+                Monatliche Ausbildungsvergütung: {selectedOpportunity.stipendMonthly}
+              </div>
+            )}
 
             <div className="space-y-1">
               <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Description & Role</h4>

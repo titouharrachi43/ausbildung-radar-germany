@@ -1,20 +1,22 @@
-import express from 'express';
-import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const root = path.resolve(__dirname, '..');
+
+// Load environment variables immediately with explicit path and override
+dotenv.config({ path: path.resolve(root, '.env'), override: true });
+
+import express from 'express';
+import cors from 'cors';
 
 import { healthRouter } from './routes/health.js';
 import { placesRouter } from './routes/places.js';
 import { geminiRouter } from './routes/gemini.js';
 import { crawlerRouter } from './routes/crawler.js';
 import { schedulerRouter } from './routes/scheduler.js';
-
-dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const root = path.resolve(__dirname, '..');
 
 const app = express();
 const port = 3000;
